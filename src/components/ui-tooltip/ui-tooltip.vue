@@ -36,7 +36,7 @@ export default defineComponent({
   watch: {
     contentPos: {
       handler(pos) {
-        if (!this.$refs.content) return;
+        if (!this.$refs.content || !this.appendToBody) return;
         (this.$refs.content as HTMLElement).style.top = `${pos.y}px`;
         (this.$refs.content as HTMLElement).style.left = `${pos.x}px`;
       },
@@ -59,7 +59,7 @@ export default defineComponent({
             class: 'ui-tooltip__activator',
             ref: 'activator',
             onVnodeMounted: ({ el: activator }) => {
-              if (!activator) return false;
+              if (!activator || !this.appendToBody) return false;
               const { x, y, width, height } = activator.getBoundingClientRect();
               this.contentPos.x = x + width / 2;
               this.contentPos.y = y + height;
@@ -89,6 +89,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .ui-tooltip {
+  position: relative;
+
   &__activator {
     cursor: pointer;
   }
@@ -101,6 +103,8 @@ export default defineComponent({
       display: block;
       padding: 10px 30px;
       border-radius: 8px;
+      top: 100%;
+      left: 50%;
       transform: translateX(-50%);
       background-color: rgba(0, 0, 0, 0.5);
       color: #fff;

@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <ui-tooltip append-to-body>
+    <ui-tooltip>
       <template #activator>
         <span>Show content</span>
       </template>
